@@ -1,6 +1,6 @@
 package br.com.joaonaif.naif_code.modules.task.useCases;
 
-import br.com.joaonaif.naif_code.exceptions.TaskAlreadyExist;
+import br.com.joaonaif.naif_code.exceptions.TaskAlreadyExistException;
 import br.com.joaonaif.naif_code.modules.task.TaskEntity;
 import br.com.joaonaif.naif_code.modules.task.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ public class CreateTaskUseCase {
     public TaskEntity execute(TaskEntity taskEntity) {
         this.taskRepository.findByName(taskEntity.getName())
                 .ifPresent((user) -> {
-                    throw new TaskAlreadyExist();
+                    throw new TaskAlreadyExistException();
                 });
 
         return this.taskRepository.save(taskEntity);
